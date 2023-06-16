@@ -1,0 +1,22 @@
+//Да се напише рекурзивна функција која ќе го најде бројот на позитивни броеви од целобројна низа. 
+//Функцијата како аргумент ја прима низата, за која се бара бројот на позитивни броеви и вкупниот број на елементи, кои ги има таа низа. 
+//Функцијата е зададена со следниот прототип:
+//int BrojPozitivni(int niza[], int n);
+//Да се напише и функција main() за тестирање на функцијата BrojPozitivni.
+
+#include <stdio.h>
+int BrojPozitivni(int niza[], int n){
+    int i, poz=0;
+    for(i=0;i<n;i++){
+        if(niza[i]>0) poz++;
+    }
+    return poz;
+}
+int main(){
+   int n,niza[100],i;
+   scanf("%d",&n);
+   for(i=0;i<n;i++) {
+       scanf("%d",&niza[i]);
+   }
+    printf("%d", BrojPozitivni(niza,n));
+}
