@@ -1,0 +1,36 @@
+//Од стандарден влез се внесуваат два цели броја N и Х.
+//Да се најде најблискот број помал од N коj е тотално различен од бројот Х.
+//Еден број е тотално различен од друг ако и само ако во него не се појавува ниту една од цифрите на другиот број.
+//Задачата да се реши без употреба на низи и матрици.
+
+#include <stdio.h>
+int totalnoRazlicen (int broj1, int broj2){
+    int digit1, digit2,temp;
+    while (broj1!=0){
+        digit1=broj1%10;
+        temp=broj2;
+        while(temp!=0){
+            digit2=temp%10;
+            if(digit1==digit2){
+                return 0;
+            }
+            temp/=10;
+        }
+        broj1/=10;
+    }
+    return 1;
+}
+int main(){
+    int N, X;
+    scanf("%d %d",&N,&X);
+    int flag=0;
+    for (int i = N - 1; i > 0; i--){
+        if (totalnoRazlicen(i,X)==1){
+            printf("%d",i);
+            flag=1;
+            break;
+        }
+    }
+    if(flag==0) printf("0");
+    return 0;
+}
