@@ -1,0 +1,66 @@
+//Од стандарден влез се чита цел број N (N<=100) и потоа N низи од знаци. Низите знаци содржат букви, цифри и специјални знаци 
+//(без знаци за празно место), а секоја од нив не е подолга од 80 знаци.
+//Да се напише програма со која што на стандарден излез ќе се отпечати најдолгата низа, којашто е палиндром 
+//(се чита исто од од лево на десно и од десно на лево) и што содржи барем еден специјален знак. 
+//Ако нема такви низи, се печати "Nema!". Ако има две или повеќе низи што го задоволуваат овој услов, се печати првата низа којашто го задоволува условот.
+//Влез:
+//9
+//a!bcdedcb!a
+//Kfd?vsvv98_89vvsv?dfK
+//Ccsvsdvdfv
+//342425vbbcb
+//352!2353696969625
+//gdg??dfg!!
+//5336346644747
+//8338736767867
+//12344321
+//Излез:
+//Kfd?vsvv98_89vvsv?dfK
+
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+int hasSpecC(char *a){
+    int i;
+    for(i=0;i< strlen(a);i++){
+        if(!isalpha(a[i]) && !isspace(a[i]) && !isalnum(a[i]) && !isdigit(a[i])) return 1;
+    }
+    return 0;
+}
+char isPalindrome(char *a){
+    int i;
+    int n= strlen(a);
+    for(i=0;i<n;i++){
+        if(a[i]!=a[n-1-i]) return 0;
+    }
+    return 1;
+}
+char clean(char *a){
+    a[strlen(a)-1]='\0';
+}
+int main(){
+    char niza[81];
+    char max[81]=" ";
+    int n,i,j,len,br=0;
+    scanf("%d\n",&n);
+    for(i=0;i<n;i++){
+        fgets(niza,80,stdin);
+        clean(niza);
+        if(isPalindrome(niza) && hasSpecC(niza)){
+            br++;
+            if(max[0]==' '){
+                for(j=0;j< strlen(niza);j++){
+                    max[j]=niza[j];
+                }
+            }
+            len= strlen(niza);
+            if(strlen(niza)> strlen(max)){
+                for(j=0;j< strlen(niza);j++){
+                    max[j]=niza[j];
+                }
+            }
+        }
+    }
+    if(br==0) printf("Nema!");
+    else printf("%s",max);
+}
