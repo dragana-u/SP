@@ -1,0 +1,64 @@
+//Да се напише програма во која од дадена датотека со име "input.txt" за секој ред ќе се отпечати бројот на цифри во тој ред, 
+//знакот :, па самите цифри подредени според ASCII кодот во растечки редослед. 
+//Редовите во датотеката не се подолги од 100 знаци.
+
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+void wtf() {
+    FILE *f = fopen("input.txt", "w");
+    char c;
+    while((c = getchar()) != EOF) {
+        fputc(c, f);
+    }
+    fclose(f);
+}
+int numOfDigits(char *line){
+    int i,counter=0;
+    for(i=0;i< strlen(line);i++){
+        if(isdigit(line[i])){
+            counter++;
+        }
+    }
+    return counter;
+}
+void findNums(char *line){
+    int i,j=0;
+    for(i=0;i< strlen(line);i++){
+        if(isdigit(line[i])){
+            line[j++]=line[i];
+        }
+    }
+}
+void arrangeNums(char *num, int n){
+    int i,j;
+    for(i=0;i<n;i++){
+        for(j=0;j<n-i-1;j++){
+            if(num[j]>num[j+1]){
+                char temp=num[j];
+                num[j]=num[j+1];
+                num[j+1]=temp;
+            }
+        }
+    }
+}
+int main() {
+    wtf();
+    FILE *f = fopen("input.txt", "r");
+    char line[100];
+    int i;
+    while(fgets(line,100,f)!=NULL){
+        line[strlen(line)-1]='\0';
+        printf("%d:", numOfDigits(line));
+        int n= numOfDigits(line);
+        findNums(line);
+        arrangeNums(line,n);
+        for(i=0;i< n;i++){
+            if(isdigit(line[i])){
+                printf("%c",line[i]);
+            }
+        }
+        printf("\n");
+    }
+    fclose(f);
+}
