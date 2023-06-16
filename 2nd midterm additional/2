@@ -1,0 +1,64 @@
+//Од тастатура се чита природен број N (N < 400).
+//Да се напише програма којашто формира квадратна матрица што ги содржи броевите од 1 до N 
+//по растечки редослед на следниот начин: во првата колона во правец од горе надолу, па продолжува во 
+//втората колона од долу нагоре, па продолжува во третата колона од горе надолу итн. 
+//Да се избере најмалата димензија на матрицата во која ќе ги собере сите броеви до N. Доколку има преостанати празни места, тие да се пополнат со нули.
+//Формираната матрица да се запише во датотека "shema.txt".
+
+#include <stdio.h>
+#include <math.h>
+void printFile() {
+    FILE *f=fopen("shema.txt","r");
+    char line[1000];
+    while(!feof(f)){
+        fgets(line,1000,f);
+        if (feof(f))
+            break;
+        printf("%s",line);
+    }
+    fclose(f);
+}
+
+int main() {
+    //Vasiot kod tuka
+    FILE *f=fopen("shema.txt","w");
+    int n;
+    scanf("%d", &n);
+    int i, j;
+    int matrix[100][100];
+    double sq = sqrt(n);
+    sq = ceil(sq);
+    int count = 1;
+    for (i = 0; i < sq; i++) {
+        for (j = 0; j < sq; j++) {
+            matrix[i][j]=0;
+        }
+    }
+    for(i=0;i<sq;i++){
+        if(i%2==0){
+            for(j=0;j<sq;j++){
+                if(count>n){
+                    break;
+                }
+                matrix[j][i]=count++;
+            }
+        }else{
+            for(j=sq-1;j>=0;j--){
+                if(count>n){
+                    break;
+                }
+                matrix[j][i]=count++;
+            }
+        }
+    }
+    for (i = 0; i < sq; i++) {
+        for (j = 0; j < sq; j++) {
+            fprintf(f, "%d ", matrix[i][j]);
+        }
+            fprintf(f, "\n");
+        }
+    fclose(f);
+    // do tuka
+    printFile();
+    return 0;
+}
