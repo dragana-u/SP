@@ -1,0 +1,43 @@
+//Од стандарден влез се чита цел број N (N<100) и потоа N низи од знаци. Низите знаци содржат букви, 
+//цифри и специјални знаци, а секоја од нив не е поголема од 50 знаци.
+//Да се напише програма што ќе ги отпечати на екран сите низи од знаци во кои се содржи поднизата А1c  
+//најмалку 2 пати (пр. A1c01АA1c92, 12A1cwwA1cxy, аA1cwA1cA1ccA1cxab) според редоследот 
+//како што се прочитани од влезот. При печатење на зборовите, сите алфабетски знаци треба да се испечатат со мали букви.
+
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+char containsA1c(char *a){
+    int i, n= strlen(a);
+    int brojac=0, flag=0;
+    for(i=0;i<n;i++){
+        int j=i;
+        if(a[i]=='A' || a[i]=='a'){
+            if(a[++j]=='1' && (a[++j]=='c' || a[j]=='C')){
+                brojac++;
+            }
+        }
+    }
+    if(brojac>=2){
+        return 1;
+    }else return 0;
+}
+char clean(char *a){
+    a[strlen(a)-1]='\0';
+}
+int main(){
+    char text[51];
+    int n;
+    scanf("%d\n",&n);
+    int i,j;
+    for(i=0;i<n;i++){
+        fgets(text,50,stdin);
+        clean(text);
+        if(containsA1c(text)){
+            for(j=0;j< strlen(text);j++){
+                text[j]= tolower(text[j]);
+            }
+            printf("%s\n",text);
+        }
+    }
+}
