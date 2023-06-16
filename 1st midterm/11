@@ -1,0 +1,49 @@
+//Цик-цак е број за кој важи дека за секој пар соседни цифри во бројот важи дека едната е помала од 5, а другата е поголема или еднаква на 5. 
+//На пример, ако бројот x е составен од цифрите a, b, c и d, тогаш за нив важи:
+//a<5, b>=5, c<5, d>=5 или a>=5, b<5, c>=5, d<5
+//Пр.  508294, 2638, 81
+//Од тастатура се читаат непознат број на цели броеви поголеми од или еднакви на 10 (броевите помали од 10 се игнорираат). 
+//Читањето завршува во моментот кога ќе се прочита знак што не е цифра. Да се испечатат сите цик-цак броеви.
+
+#include <stdio.h>
+int isCikCak(int value) {
+    int flag = 0;
+    if (value >= 10 && value < 100) {
+        int digit = value % 10;
+        int digit2 = value / 10;
+        if ((digit<5 && digit2>=5)||(digit>=5 && digit2<5 )) {
+            return 1;
+        }
+    }else{
+        while (value) {
+            int digit1,digit2;
+            if(value>=10 && value<100){
+                if(digit1==5 || digit2==5) {
+                    digit1 = value % 10;
+                    if(digit1==5 && digit2==5) return 0;
+                }else break;
+            }
+             digit1 = value % 10;
+             digit2 = value % 100 / 10;
+            if ((digit1 < 5 && digit2 >= 5) || (digit1 >= 5 && digit2 < 5)) {
+                flag = 1;
+            } else {
+                flag = 0;
+            }
+            if (flag == 0) break;
+            value /= 10;
+        } }
+    return flag;
+}
+    int main() {
+        int broj;
+        for (int i = 0;; i++) {
+            if (scanf("%d", &broj)) {
+                if (broj >= 10) {
+                    if (isCikCak(broj) == 1) {
+                        printf("%d\n", broj);
+                    }
+                } else continue;
+            } else break;
+        }
+    }
